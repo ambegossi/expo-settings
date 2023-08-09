@@ -1,9 +1,18 @@
 import * as Settings from "expo-settings";
+import React from "react";
 
 import { Button, StyleSheet, Text, View } from "react-native";
 
 export default function App() {
-  const theme = Settings.getTheme();
+  const [theme, setTheme] = React.useState<string>(Settings.getTheme());
+
+  React.useEffect(() => {
+    const subscription = Settings.addThemeListener(({ theme: newTheme }) => {
+      setTheme(newTheme);
+    });
+
+    return () => subscription.remove();
+  }, [setTheme]);
 
   const nextTheme = theme === "dark" ? "light" : "dark";
 

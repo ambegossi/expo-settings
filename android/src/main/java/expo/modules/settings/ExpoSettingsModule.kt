@@ -9,8 +9,11 @@ class ExpoSettingsModule : Module() {
   override fun definition() = ModuleDefinition {
     Name("ExpoSettings")
 
+    Events("onChangeTheme")
+
     Function("setTheme") { theme: String ->
       getPreferences().edit().putString("theme", theme).commit()
+      this@ExpoSettingsModule.sendEvent("onChangeTheme", bundleOf("theme" to theme))
     }
 
     Function("getTheme") {
