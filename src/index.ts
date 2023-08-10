@@ -1,10 +1,13 @@
 import { EventEmitter, Subscription } from "expo-modules-core";
+
 import ExpoSettingsModule from "./ExpoSettingsModule";
 
 const emitter = new EventEmitter(ExpoSettingsModule);
 
+export type Theme = "light" | "dark" | "system";
+
 export type ThemeChangeEvent = {
-  theme: string;
+  theme: Theme;
 };
 
 export function addThemeListener(
@@ -13,10 +16,10 @@ export function addThemeListener(
   return emitter.addListener<ThemeChangeEvent>("onChangeTheme", listener);
 }
 
-export function getTheme(): string {
+export function getTheme(): Theme {
   return ExpoSettingsModule.getTheme();
 }
 
-export function setTheme(theme: string): void {
+export function setTheme(theme: Theme): void {
   return ExpoSettingsModule.setTheme(theme);
 }
